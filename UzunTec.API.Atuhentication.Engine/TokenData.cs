@@ -1,4 +1,4 @@
-﻿namespace UzunTec.API.Authentication.RestAPI.Authentication
+﻿namespace UzunTec.API.Authentication.Engine
 {
     // snake case properties for Identity Server Compatbility
     public class TokenData

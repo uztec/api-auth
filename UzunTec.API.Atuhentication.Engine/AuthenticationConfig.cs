@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace UzunTec.API.Authentication.RestAPI.Authentication
+namespace UzunTec.API.Authentication.Engine
 {
     public class AuthenticationConfig
     {

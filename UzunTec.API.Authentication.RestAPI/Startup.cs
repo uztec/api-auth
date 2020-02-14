@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +11,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using UzunTec.API.Authentication.RestAPI.Authentication;
+using UzunTec.API.Authentication.Engine;
 
 namespace UzunTec.API.Authentication.RestAPI
 {
@@ -81,18 +79,7 @@ namespace UzunTec.API.Authentication.RestAPI
             #endregion
 
             #region Authentication
-
-            AuthenticationConfig authenticationConfig = this.Configuration.GetSection("AuthSettings").Get<AuthenticationConfig>();
-            Authenticator authenticator = new Authenticator(authenticationConfig);
-            services.AddSingleton<AuthenticationConfig>(authenticationConfig);
-            services.AddSingleton<Authenticator>(authenticator);
-
-            services.AddAuthentication(delegate (AuthenticationOptions authOptions)
-            {
-                authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(authenticator.SetBearerTokenOptions);
-
+            services.AddAuthenticationEngine(this.Configuration.GetSection("AuthSettings"));
             #endregion
 
         }

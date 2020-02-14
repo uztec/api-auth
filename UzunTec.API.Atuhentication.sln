@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UzunTec.API.Authentication.RestAPI", "UzunTec.API.Authentication.RestAPI\UzunTec.API.Authentication.RestAPI.csproj", "{71C7E1C1-5237-4411-89DA-CB166580CC81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UzunTec.API.Atuhentication.Engine", "UzunTec.API.Atuhentication.Engine\UzunTec.API.Atuhentication.Engine.csproj", "{50BBA0EC-FC00-45FA-B841-0A3077EE7851}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{71C7E1C1-5237-4411-89DA-CB166580CC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71C7E1C1-5237-4411-89DA-CB166580CC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71C7E1C1-5237-4411-89DA-CB166580CC81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50BBA0EC-FC00-45FA-B841-0A3077EE7851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50BBA0EC-FC00-45FA-B841-0A3077EE7851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50BBA0EC-FC00-45FA-B841-0A3077EE7851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50BBA0EC-FC00-45FA-B841-0A3077EE7851}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

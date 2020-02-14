@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using UzunTec.API.Authentication.RestAPI.Authentication;
+using UzunTec.API.Authentication.Engine;
 
 namespace UzunTec.API.Authentication.RestAPI.Controllers
 {
@@ -14,7 +14,7 @@ namespace UzunTec.API.Authentication.RestAPI.Controllers
         {
             this.authenticator = authenticator;
         }
-        
+
         [HttpGet("{user}")]
         public ActionResult<TokenData> Get(string user)
         {

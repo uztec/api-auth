@@ -7,7 +7,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace UzunTec.API.Authentication.RestAPI.Authentication
+namespace UzunTec.API.Authentication.Engine
 {
     public class Authenticator
     {
