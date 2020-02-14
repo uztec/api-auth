@@ -18,13 +18,24 @@ namespace UzunTec.API.Authentication.RestAPI.Controllers
         [HttpGet("{user}")]
         public ActionResult<TokenData> Get(string user)
         {
-            if (user == "renato")
+            if (user == "admin")
             {
-                return this.Ok(this.authenticator.GenerateToken(user, new Dictionary<string, string> { { "teste", "teste" } }, new List<string> { "Admin" }));
+                Dictionary<string, string> claims = new Dictionary<string, string>
+                {
+                    { "Access", "full" },
+                };
+
+                List<string> roles = new List<string>
+                {
+                    "WritePermission",
+                };
+
+                TokenData token = this.authenticator.GenerateToken(user, claims, roles);
+                return this.Ok(token);
             }
             else
             {
-                return this.Ok(this.authenticator.GenerateToken(user));
+                return this.Ok(this.authenticator.GenerateToken(user)); // No Claims and no Roles
             }
         }
 

@@ -19,7 +19,7 @@ namespace UzunTec.API.Authentication.RestAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "WritePermission")]
         public ActionResult<string> Get(int id)
         {
             return this.Ok("Authorized");
