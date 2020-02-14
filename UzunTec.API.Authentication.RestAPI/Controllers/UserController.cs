@@ -14,8 +14,7 @@ namespace UzunTec.API.Authentication.RestAPI.Controllers
         {
             this.authenticator = authenticator;
         }
-
-
+        
         [HttpGet("{user}")]
         public ActionResult<TokenData> Get(string user)
         {

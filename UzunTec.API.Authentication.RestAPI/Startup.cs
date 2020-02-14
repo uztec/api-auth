@@ -1,41 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using SimpleInjector;
-using SimpleInjector.Integration.ServiceCollection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using UzunTec.API.Authentication.RestAPI.Authentication;
 
 namespace UzunTec.API.Authentication.RestAPI
 {
-    public class Startup : IDisposable
+    public class Startup
     {
-        private readonly APIAuthContainer container;
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
-            this.container = new APIAuthContainer(configuration);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()//x => x.Filters.Add(new AuthorizeFilter("Bearer")))
+            services.AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
             .AddJsonOptions(delegate (MvcJsonOptions options)
             {
@@ -86,13 +80,6 @@ namespace UzunTec.API.Authentication.RestAPI
 
             #endregion
 
-            #region Simple Injector
-            services.AddSimpleInjector(this.container, delegate (SimpleInjectorAddOptions options)
-            {
-                options.AddAspNetCore().AddControllerActivation().AddViewComponentActivation();
-            });
-            #endregion
-
             #region Authentication
 
             AuthenticationConfig authenticationConfig = this.Configuration.GetSection("AuthSettings").Get<AuthenticationConfig>();
@@ -113,9 +100,6 @@ namespace UzunTec.API.Authentication.RestAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseSimpleInjector(this.container);
-            this.container.Initialize();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -147,9 +131,5 @@ namespace UzunTec.API.Authentication.RestAPI
             app.UseCors(delegate (CorsPolicyBuilder builder) { builder.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader(); });
         }
 
-        public void Dispose()
-        {
-            this.container.Dispose();
-        }
     }
 }
