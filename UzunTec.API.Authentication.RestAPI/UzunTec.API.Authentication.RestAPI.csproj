@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UzunTec.API.Atuhentication.Engine\UzunTec.API.Atuhentication.Engine.csproj" />
+    <ProjectReference Include="..\UzunTec.API.Authentication.Engine\UzunTec.API.Authentication.Engine.csproj" />
   </ItemGroup>
 
 </Project>
