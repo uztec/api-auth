@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -27,20 +29,21 @@ namespace UzunTec.API.Authentication.RestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-            .AddJsonOptions(delegate (MvcJsonOptions options)
+            services.AddControllers(delegate (MvcOptions options)
             {
-                IContractResolver resolver = options.SerializerSettings.ContractResolver;
-                if (resolver != null)
-                {
-                    DefaultContractResolver res = resolver as DefaultContractResolver;
-                    res.NamingStrategy = new CamelCaseNamingStrategy(false, true);
-                }
-                options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy(true, true)));
-                options.SerializerSettings.DateFormatString = "yyyy-MM-dd";
-                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+             .AddNewtonsoftJson(delegate (MvcNewtonsoftJsonOptions options)
+             {
+                 IContractResolver resolver = options.SerializerSettings.ContractResolver;
+                 if (resolver != null)
+                 {
+                     DefaultContractResolver res = resolver as DefaultContractResolver;
+                     res.NamingStrategy = new CamelCaseNamingStrategy(false, true);
+                 }
+                 options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy(true, true)));
+                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd";
+                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+             });
 
             #region Swagger
 
@@ -85,7 +88,7 @@ namespace UzunTec.API.Authentication.RestAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -97,11 +100,16 @@ namespace UzunTec.API.Authentication.RestAPI
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseMvc();
-
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseRouting();
+            app.UseCors();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseEndpoints(delegate (IEndpointRouteBuilder options)
+            {
+                options.MapControllers();
+            });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -117,6 +125,5 @@ namespace UzunTec.API.Authentication.RestAPI
             // global cors policy
             app.UseCors(delegate (CorsPolicyBuilder builder) { builder.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader(); });
         }
-
     }
 }
