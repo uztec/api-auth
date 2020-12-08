@@ -6,6 +6,7 @@ namespace UzunTec.API.Authentication.Engine
     {
         public string JtiCode { get; set; }
         public string SignatureKey { get; set; }
+        public bool IgnoreSignature { get; set; }
         public string SignatureAlgorithm { get; set; }
         public string Audience { get; set; }
         public string Issuer { get; set; }
@@ -15,6 +16,7 @@ namespace UzunTec.API.Authentication.Engine
         {
             // Commoms: RsaSha256Signature or HmacSha256Signature
             this.SignatureAlgorithm = SecurityAlgorithms.HmacSha256Signature;
+            this.IgnoreSignature = false;
         }
     }
 }

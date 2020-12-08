@@ -15,6 +15,8 @@ namespace UzunTec.API.Authentication.Engine
         private readonly Lazy<SecurityKey> lazyKey;
         private SecurityKey Key { get { return this.lazyKey.Value; } }
 
+        public JwtSecurityToken TokenData { get; private set; }
+
         public Authenticator(AuthenticationConfig config)
         {
             this.config = config;
@@ -39,7 +41,7 @@ namespace UzunTec.API.Authentication.Engine
                 Audience = this.config.Audience,
                 Subject = this.GenerateClaimsIdentity(userCode, claims, roles),
                 NotBefore = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddSeconds(this.config.TokenExpireTimeInSeconds),
+                Expires = DateTime.UtcNow.AddSeconds(this.config.TokenExpireTimeInSeconds+1),
             };
 
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
@@ -47,20 +49,25 @@ namespace UzunTec.API.Authentication.Engine
         }
 
 
-        public void SetBearerTokenOptions(JwtBearerOptions jwtOptions)
+        public void SetBearerTokenOptions(JwtBearerOptions jwtOptions, AuthenticationConfig authenticationConfig)
         {
             jwtOptions.RequireHttpsMetadata = false;
             jwtOptions.SaveToken = true;
 
             jwtOptions.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuerSigningKey = true,
+                ValidateIssuerSigningKey = !authenticationConfig.IgnoreSignature,
                 IssuerSigningKey = this.Key,
                 ValidateIssuer = !String.IsNullOrEmpty(this.config.Issuer),
                 ValidIssuer = this.config.Issuer,
                 ValidateAudience = !String.IsNullOrEmpty(this.config.Audience),
                 ValidAudience = this.config.Audience,
-                ValidateLifetime = true,
+                ValidateLifetime = authenticationConfig.TokenExpireTimeInSeconds > 0,
+                TokenReader = new TokenReader(delegate (string token, TokenValidationParameters validationParameters)
+                {
+                    this.TokenData = (JwtSecurityToken)new JwtSecurityTokenHandler().ReadToken(token);
+                    return this.TokenData;
+                }),
             };
         }
 

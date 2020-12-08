@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UzunTec.API.Authentication.Engine;
 
@@ -39,5 +41,11 @@ namespace UzunTec.API.Authentication.RestAPI.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("tokenData")]
+        public ActionResult<JwtPayload> GetTokenData()
+        {
+            return Ok(authenticator.TokenData?.Payload);
+        }
     }
 }

@@ -18,8 +18,10 @@ namespace UzunTec.API.Authentication.Engine
             {
                 authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(authenticator.SetBearerTokenOptions);
-
+            }).AddJwtBearer(delegate (JwtBearerOptions jwtOptions)
+            {
+                authenticator.SetBearerTokenOptions(jwtOptions, authenticationConfig);
+            });
         }
     }
 }
