@@ -6,15 +6,15 @@ Libraries and a sample REST API that help .NET developers add **JWT Bearer** aut
 
 | Project | Purpose |
 |--------|---------|
-| **UzunTec.API.Authentication.Engine** | `netstandard2.0` library: issue JWTs, configure JWT Bearer validation, DI extension for `IServiceCollection`. Packaged as **UzunTec.API.Authentication.Engine** (NuGet metadata in the `.csproj`). |
-| **UzunTec.API.Authentication.RestAPI** | ASP.NET Core **3.1** sample API: token endpoint pattern, `[Authorize]` examples, Swagger UI with Bearer security. |
+| **UzunTec.API.Authentication.Engine** | **.NET 6** class library: issue JWTs, configure JWT Bearer validation, DI extension for `IServiceCollection`. Packaged as **UzunTec.API.Authentication.Engine** (NuGet metadata in the `.csproj`). |
+| **UzunTec.API.Authentication.RestAPI** | ASP.NET Core on **.NET 6** sample API: token endpoint pattern, `[Authorize]` examples, Swagger UI with Bearer security. |
 
 Solution file: `UzunTec.API.Atuhentication.sln` (note the filename spelling).
 
 ## Requirements
 
-- [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet/3.1) (for the sample web project)
-- For consuming only the Engine library: any host that supports `netstandard2.0` and the referenced ASP.NET Core / JWT packages
+- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (or a newer SDK that can build `net6.0` targets)
+- For consuming the Engine library: applications or libraries that target **.NET 6** or higher (the package targets `net6.0`)
 
 ## Quick start (sample API)
 

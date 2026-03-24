@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -29,15 +29,11 @@ namespace UzunTec.API.Authentication.RestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(delegate (MvcOptions options)
-            {
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+            services.AddControllers()
              .AddNewtonsoftJson(delegate (MvcNewtonsoftJsonOptions options)
              {
-                 IContractResolver resolver = options.SerializerSettings.ContractResolver;
-                 if (resolver != null)
+                 if (options.SerializerSettings.ContractResolver is DefaultContractResolver res)
                  {
-                     DefaultContractResolver res = resolver as DefaultContractResolver;
                      res.NamingStrategy = new CamelCaseNamingStrategy(false, true);
                  }
                  options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy(true, true)));
@@ -51,7 +47,6 @@ namespace UzunTec.API.Authentication.RestAPI
             services.AddSwaggerGen(delegate (SwaggerGenOptions options)
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "UzunTec API Authorization Tools", Version = "v1" });
-                options.DescribeAllParametersInCamelCase();
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
