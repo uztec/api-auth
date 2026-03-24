@@ -2,20 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-	<PackageId>UzunTec.API.Authentication.Engine</PackageId>
-	<Version>3.1.0</Version>
-	<Authors>Uzun Technology</Authors>
-	<Company>Uzun Technology</Company>
-	<RepositoryUrl>https://github.com/uztec/api-auth</RepositoryUrl> 
-	<RepositoryType>git</RepositoryType> 
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild> 
-	<Copyright>© 2020 Uzun Technology</Copyright> 
-	<OutputType>Library</OutputType> 
-	<PackageTags>JWT Auth Authentication AuthEngine Token Encryption</PackageTags> 
-	<PackageIcon>api-auth-uztec.png</PackageIcon> 
-	<Product>UzunTec.API.Authentication.Engine</Product> 
-	<AssemblyName>UzunTec.API.Authentication.Engine</AssemblyName> 
-	<RootNamespace>UzunTec.API.Authentication.Engine</RootNamespace> 
+    <PackageId>UzunTec.API.Authentication.Engine</PackageId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Version>3.1.5</Version>
+    <Authors>Uzun Technology</Authors>
+    <Company>Uzun Technology</Company>
+    <RepositoryUrl>https://github.com/uztec/api-auth</RepositoryUrl> 
+    <RepositoryType>git</RepositoryType> 
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild> 
+    <Copyright>© 2020 Uzun Technology</Copyright> 
+    <OutputType>Library</OutputType> 
+    <PackageTags>JWT Auth Authentication AuthEngine Token Encryption</PackageTags> 
+    <PackageIcon>api-auth-uztec.png</PackageIcon> 
+    <Product>UzunTec.API.Authentication.Engine</Product> 
+    <AssemblyName>UzunTec.API.Authentication.Engine</AssemblyName> 
+    <RootNamespace>UzunTec.API.Authentication.Engine</RootNamespace> 
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="\"/>
+    <None Include="../LICENSE" Pack="true" PackagePath="\"/>
     <None Include="api-auth-uztec.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

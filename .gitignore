@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /out.txt
 /publish-nuget.bat
+/build_and_publish.sh
