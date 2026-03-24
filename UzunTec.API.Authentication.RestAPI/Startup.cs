@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -80,6 +79,11 @@ namespace UzunTec.API.Authentication.RestAPI
             services.AddAuthenticationEngine(this.Configuration.GetSection("AuthSettings"));
             #endregion
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                    policy.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,24 +105,15 @@ namespace UzunTec.API.Authentication.RestAPI
             app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(delegate (IEndpointRouteBuilder options)
-            {
-                options.MapControllers();
-            });
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(delegate (SwaggerUIOptions options)
             {
                 options.SwaggerEndpoint("./v1/swagger.json", "UzunTec API Authorization Tools");
                 options.RoutePrefix = "swagger";
             });
 
-            // global cors policy
-            app.UseCors(delegate (CorsPolicyBuilder builder) { builder.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader(); });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }
